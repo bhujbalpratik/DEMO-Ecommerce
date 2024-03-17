@@ -3,6 +3,7 @@ import express from "express"
 import { connectDB } from "./config/db.js"
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser"
+import userRouter from "./routes/user.routers.js"
 
 dotenv.config({ path: "./backend/config/.env" })
 
@@ -15,7 +16,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
-app.get("/", (req, res) => res.send("hello,Everything is working "))
+app.use("/api/users", userRouter)
 
 app.listen(port, () =>
   console.log(`server is working on http://localhost:${port}`)
