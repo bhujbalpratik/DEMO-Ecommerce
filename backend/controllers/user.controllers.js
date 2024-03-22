@@ -69,21 +69,18 @@ export const getAllUsers = async (req, res, next) => {
 export const updateUser = async (req, res, next) => {
   if (req.params.id !== req.user.id)
     return next(errorHandler(400, "Unauthorized to update user"))
+
   try {
-    if (
-      req.body.username.trim() ||
-      req.body.email.trim() ||
-      req.body.password.trim() === ""
-    )
-      return next(errorHandler(401, "fields can't be empty"))
-    const userName = await User.findOne({ username: req.body.username || "" })
-    const userEmail = await User.findOne({ email: req.body.email || "" })
-
-    if (userName) return next(errorHandler(500, "username already existed"))
-
-    if (userEmail) return next(errorHandler(500, "user already existed"))
-
-    req.body.password = bcryptjs.hashSync(req.body.password, 10)
+    if (req.body.username) {
+      let userName = await User.findOne({ username: req.body.username || "" })
+      if (userName) return next(errorHandler(500, "username already existed"))
+    }
+    if (req.body.email) {
+      let userEmail = await User.findOne({ email: req.body.email || "" })
+      if (userEmail) return next(errorHandler(500, "user already existed"))
+    }
+    if (req.body.password)
+      req.body.password = bcryptjs.hashSync(req.body.password, 10)
 
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
@@ -98,6 +95,75 @@ export const updateUser = async (req, res, next) => {
     )
     const { password, ...rest } = updatedUser._doc
     res.status(200).json(rest)
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const deleteUser = async (req, res, next) => {
+  if (req.user.id !== req.params.id)
+    return next(errorHandler(403, "You can delete only your account"))
+
+  try {
+    await User.findByIdAndDelete(req.params.id)
+    res.status(200).json({ success: true, message: "User has been deleted" })
+  } catch (error) {
+    next(error)
+  }
+}
+
+// Admin API
+export const deleteUserById = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id)
+
+    if (user) {
+      if (user.isAdmin) {
+        return next(errorHandler(400, "Cannot delete admin"))
+      }
+
+      await User.findByIdAndDelete(req.params.id)
+      res.json({ message: "User removed" })
+    } else {
+      return next(errorHandler(404, "User not found."))
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+export const getUserById = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id).select("-password")
+
+    if (user) {
+      res.json(user)
+    } else {
+      return next(errorHandler(404, "User not found."))
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+export const updateUserById = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id)
+
+    if (user) {
+      user.username = req.body.username || user.username
+      user.email = req.body.email || user.email
+      user.isAdmin = Boolean(req.body.isAdmin)
+
+      const updatedUser = await user.save()
+
+      res.json({
+        _id: updatedUser._id,
+        username: updatedUser.username,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+      })
+    } else {
+      return next(errorHandler(404, "User not found."))
+    }
   } catch (error) {
     next(error)
   }
