@@ -31,13 +31,16 @@ const Profile = () => {
       toast.error("Passwords do not match")
     } else {
       try {
-        console.log(userInfo._id)
-        const res = await updateProfile(
-          { username, email, password },
-          userInfo._id
-        ).unwrap()
+        const res = await updateProfile({
+          userId: userInfo._id,
+          username,
+          email,
+          password,
+        }).unwrap()
         dispatch(setCredentials({ ...res }))
         toast.success("Profile updated successfully")
+        setPassword("")
+        setConfirmPassword("")
       } catch (err) {
         toast.error(err?.data?.message || err.error)
       }

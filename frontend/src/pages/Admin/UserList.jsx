@@ -59,7 +59,7 @@ const UserList = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-semibold mb-4">Users</h1>
+      <h1 className="text-2xl font-semibold mb-4 text-center">Users</h1>
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -153,7 +153,7 @@ const UserList = () => {
                       <div className="flex">
                         <button
                           onClick={() => deleteHandler(user._id)}
-                          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                          className="bg-red-700 hover:bg-red-400 text-white font-bold py-2 px-4 rounded"
                         >
                           <FaTrash />
                         </button>

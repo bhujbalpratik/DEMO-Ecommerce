@@ -72,14 +72,6 @@ export const updateUser = async (req, res, next) => {
     return next(errorHandler(400, "Unauthorized to update user"))
 
   try {
-    if (req.body.username) {
-      let userName = await User.findOne({ username: req.body.username || "" })
-      if (userName) return next(errorHandler(500, "username already existed"))
-    }
-    if (req.body.email) {
-      let userEmail = await User.findOne({ email: req.body.email || "" })
-      if (userEmail) return next(errorHandler(500, "user already existed"))
-    }
     if (req.body.password)
       req.body.password = bcryptjs.hashSync(req.body.password, 10)
 
