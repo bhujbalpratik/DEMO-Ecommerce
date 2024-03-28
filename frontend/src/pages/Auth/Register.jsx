@@ -19,15 +19,11 @@ const Register = () => {
 
   const { userInfo } = useSelector((state) => state.auth)
 
-  const { search } = useLocation()
-  const sp = new URLSearchParams(search)
-  const redirect = sp.get("redirect") || "/"
-
   useEffect(() => {
     if (userInfo) {
-      navigate(redirect)
+      navigate("/login")
     }
-  }, [navigate, redirect, userInfo])
+  }, [navigate, userInfo])
 
   const submitHandler = async (e) => {
     e.preventDefault()
@@ -38,7 +34,7 @@ const Register = () => {
       try {
         const res = await register({ username, email, password }).unwrap()
         dispatch(setCredentials({ ...res }))
-        navigate(redirect)
+        navigate("/login")
         toast.success("User successfully registered")
       } catch (err) {
         console.log(err)
@@ -135,17 +131,14 @@ const Register = () => {
         <div className="mt-4">
           <p className="text-white">
             Already have an account?{" "}
-            <Link
-              to={redirect ? `/login?redirect=${redirect}` : "/login"}
-              className="text-pink-500 hover:underline"
-            >
+            <Link to={"/login"} className="text-pink-500 hover:underline">
               Login
             </Link>
           </p>
         </div>
       </div>
       <img
-        src="https://images.unsplash.com/photo-1576502200916-3808e07386a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2065&q=80"
+        src="https://mosodigital.com/wp-content/uploads/2021/07/E-Commerce-Shopping-animated-graphic-green.gif"
         alt=""
         className="h-[65rem] w-[59%] xl:block md:hidden sm:hidden rounded-lg"
       />

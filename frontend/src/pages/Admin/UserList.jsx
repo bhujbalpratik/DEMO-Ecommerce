@@ -8,8 +8,8 @@ import {
   useUpdateUserMutation,
 } from "../../redux/api/usersApiSlice"
 import { toast } from "react-toastify"
+import AdminMenu from "./AdminMenu"
 // ⚠️⚠️⚠️ don't forget this ⚠️⚠️⚠️⚠️
-// import AdminMenu from "./AdminMenu";
 
 const UserList = () => {
   const { data: users, refetch, isLoading, error } = useGetUsersQuery()
@@ -61,14 +61,16 @@ const UserList = () => {
     <div className="p-4">
       <h1 className="text-2xl font-semibold mb-4 text-center">Users</h1>
       {isLoading ? (
-        <Loader />
+        <center>
+          <Loader />
+        </center>
       ) : error ? (
         <Message variant="danger">
           {error?.data?.message || error.error}
         </Message>
       ) : (
         <div className="flex flex-col md:flex-row">
-          {/* <AdminMenu /> */}
+          <AdminMenu />
           <table className="w-full md:w-4/5 mx-auto">
             <thead>
               <tr>
@@ -102,13 +104,15 @@ const UserList = () => {
                     ) : (
                       <div className="flex items-center">
                         {user.username}{" "}
-                        <button
-                          onClick={() =>
-                            toggleEdit(user._id, user.username, user.email)
-                          }
-                        >
-                          <FaEdit className="ml-[1rem]" />
-                        </button>
+                        {!user.isAdmin && (
+                          <button
+                            onClick={() =>
+                              toggleEdit(user._id, user.username, user.email)
+                            }
+                          >
+                            <FaEdit className="ml-[1rem]" />
+                          </button>
+                        )}
                       </div>
                     )}
                   </td>
@@ -121,6 +125,7 @@ const UserList = () => {
                           onChange={(e) => setEditableUserEmail(e.target.value)}
                           className="w-full p-2 border rounded-lg"
                         />
+
                         <button
                           onClick={() => updateHandler(user._id)}
                           className="ml-2 bg-blue-500 text-white py-2 px-4 rounded-lg"
@@ -131,13 +136,15 @@ const UserList = () => {
                     ) : (
                       <div className="flex items-center">
                         <a href={`mailto:${user.email}`}>{user.email}</a>{" "}
-                        <button
-                          onClick={() =>
-                            toggleEdit(user._id, user.name, user.email)
-                          }
-                        >
-                          <FaEdit className="ml-[1rem]" />
-                        </button>
+                        {!user.isAdmin && (
+                          <button
+                            onClick={() =>
+                              toggleEdit(user._id, user.username, user.email)
+                            }
+                          >
+                            <FaEdit className="ml-[1rem]" />
+                          </button>
+                        )}
                       </div>
                     )}
                   </td>

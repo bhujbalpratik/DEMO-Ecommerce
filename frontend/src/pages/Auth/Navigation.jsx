@@ -54,7 +54,7 @@ const Navigation = () => {
       <button
         onClick={toggleSidebar}
         className={`md:hidden fixed top-4 right-4 z-50 text-white ${
-          showSidebar ? "hidden" : "block"
+          !showSidebar ? "hidden" : "block"
         }`}
         style={{ zIndex: 9999 }}
       >
@@ -157,9 +157,12 @@ const Navigation = () => {
             onClick={toggleDropdown}
             className="flex items-center text-gray-800 focus:outline-none"
           >
-            <AiOutlineUser size={26} />
             {userInfo ? (
-              <span className="text-white">{userInfo.username}</span>
+              <>
+                <AiOutlineUser size={26} color="white" />
+                &nbsp;
+                <span className="text-white">{userInfo.username}</span>
+              </>
             ) : (
               <></>
             )}
@@ -195,6 +198,7 @@ const Navigation = () => {
                     <Link
                       to="/admin/dashboard"
                       className="block px-4 py-2 hover:bg-gray-100"
+                      onClick={toggleDropdown}
                     >
                       Dashboard
                     </Link>
@@ -203,6 +207,7 @@ const Navigation = () => {
                     <Link
                       to="/admin/productlist"
                       className="block px-4 py-2 hover:bg-gray-100"
+                      onClick={toggleDropdown}
                     >
                       Products
                     </Link>
@@ -211,6 +216,7 @@ const Navigation = () => {
                     <Link
                       to="/admin/categorylist"
                       className="block px-4 py-2 hover:bg-gray-100"
+                      onClick={toggleDropdown}
                     >
                       Category
                     </Link>
@@ -219,6 +225,7 @@ const Navigation = () => {
                     <Link
                       to="/admin/orderlist"
                       className="block px-4 py-2 hover:bg-gray-100"
+                      onClick={toggleDropdown}
                     >
                       Orders
                     </Link>
@@ -227,6 +234,7 @@ const Navigation = () => {
                     <Link
                       to="/admin/userlist"
                       className="block px-4 py-2 hover:bg-gray-100"
+                      onClick={toggleDropdown}
                     >
                       Users
                     </Link>
@@ -237,6 +245,7 @@ const Navigation = () => {
                 <Link
                   to="/profile"
                   className="block px-4 py-2 hover:bg-gray-100"
+                  onClick={toggleDropdown}
                 >
                   Profile
                 </Link>

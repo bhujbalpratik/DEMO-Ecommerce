@@ -18,7 +18,20 @@ export const createUser = async (req, res, next) => {
 
   try {
     await newUser.save()
-    res.status(201).json({ message: "User Created Successfully" })
+
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET)
+
+    res
+      .status(201)
+      .cookie("token", token, {
+        httpOnly: true,
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+      })
+      .json({
+        _id: newUser._id,
+        username: newUser.username,
+        email: newUser.email,
+      })
   } catch (error) {
     next(error)
   }
@@ -142,6 +155,9 @@ export const updateUserById = async (req, res, next) => {
     const user = await User.findById(req.params.id)
 
     if (user) {
+      if (user.isAdmin) {
+        return next(errorHandler(400, "Cannot edit admin details"))
+      }
       user.username = req.body.username || user.username
       user.email = req.body.email || user.email
       user.isAdmin = Boolean(req.body.isAdmin)
