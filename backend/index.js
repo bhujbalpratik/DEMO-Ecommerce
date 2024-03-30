@@ -1,7 +1,7 @@
 import express from "express"
 import path from "path"
 import { connectDB } from "./config/db.js"
-import dotenv from "dotenv"
+import { config } from "dotenv"
 import cookieParser from "cookie-parser"
 import userRouter from "./routes/user.routers.js"
 import categoryRouter from "./routes/category.routers.js"
@@ -9,7 +9,7 @@ import productsRouter from "./routes/product.routers.js"
 import uploadRouter from "./routes/upload.router.js"
 import { errorMiddleware } from "./middlewares/error.middleware.js"
 
-dotenv.config({ path: "./backend/config/.env" })
+config({ path: "./backend/config/.env" })
 
 connectDB()
 
