@@ -6,11 +6,10 @@ import { useEffect } from "react"
 
 const AllProducts = () => {
   const { data: products, isLoading, isError, refetch } = useAllProductsQuery()
-  // refetch()
-  // useEffect(() => {
-  //   refetch()
-  // }, [refetch])
-  // refetch()
+
+  useEffect(() => {
+    refetch()
+  }, [])
   if (isLoading) {
     return <div>Loading...</div>
   }
@@ -77,7 +76,7 @@ const AllProducts = () => {
                             />
                           </svg>
                         </Link>
-                        <p>$ {product?.price}</p>
+                        <p>&#8377; {product?.price}</p>
                       </div>
                     </div>
                   </div>

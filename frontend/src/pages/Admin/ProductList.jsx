@@ -93,6 +93,7 @@ const ProductList = () => {
                 accept="image/*"
                 onChange={uploadFileHandler}
                 className={!image ? "hidden" : "text-white"}
+                required
               />
             </label>
           </div>
@@ -105,6 +106,7 @@ const ProductList = () => {
                   type="text"
                   className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white"
                   value={name}
+                  required
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
@@ -114,6 +116,7 @@ const ProductList = () => {
                   type="number"
                   className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white"
                   value={price}
+                  required
                   onChange={(e) => setPrice(e.target.value)}
                 />
               </div>
@@ -124,6 +127,7 @@ const ProductList = () => {
                 <input
                   type="number"
                   className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white"
+                  required
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                 />
@@ -133,6 +137,7 @@ const ProductList = () => {
                 <input
                   type="text"
                   className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white"
+                  required
                   value={brand}
                   onChange={(e) => setBrand(e.target.value)}
                 />
@@ -146,6 +151,7 @@ const ProductList = () => {
               type="text"
               className="p-2 mb-3 bg-[#101011] border rounded-lg w-[95%] text-white"
               value={description}
+              required
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
 
@@ -156,6 +162,7 @@ const ProductList = () => {
                   type="text"
                   className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white"
                   value={stock}
+                  required
                   onChange={(e) => setStock(e.target.value)}
                 />
               </div>
