@@ -8,6 +8,8 @@ body {
 }
 
 input,
+select,
+option,
 textarea {
   color: #000;
 }

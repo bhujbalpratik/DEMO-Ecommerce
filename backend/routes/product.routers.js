@@ -11,6 +11,7 @@ import {
   fetchTopProducts,
   fetchProductById,
   addProductReview,
+  filterProducts,
 } from "../controllers/product.controllers.js"
 const router = express.Router()
 router
@@ -35,5 +36,7 @@ router.route("/allproducts").get(fetchAllProducts)
 
 router.route("/:id").get(fetchProductById)
 router.route("/:id/reviews").post(isAuthenticated, checkId, addProductReview)
+
+router.route("/filtered-products").post(filterProducts)
 
 export default router
