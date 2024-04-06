@@ -14,6 +14,7 @@ import { logout } from "../../redux/features/auth/authSlice"
 import { Link } from "react-router-dom"
 import "./Navigation.css"
 import { FaHeart } from "react-icons/fa"
+import MobileNavigation from "../../components/MobileNavigation"
 
 const Navigation = () => {
   const { userInfo } = useSelector((state) => state.auth)
@@ -63,50 +64,10 @@ const Navigation = () => {
         <div className="burger-menu-bar w-6 h-1 bg-white mb-1"></div>
       </button>
 
-      {showSidebar && (
-        <div
-          className="md:hidden fixed top-0 left-0 w-full h-full bg-pink-900 text-white"
-          onClick={closeSidebar}
-          style={{ zIndex: 9998 }}
-        >
-          {/* Sidebar navigation for medium screens and smaller */}
-          <div className="p-4 flex flex-col justify-center h-full">
-            <div className="flex flex-col items-center space-y-4">
-              <Link
-                to="/"
-                className="flex items-center transition-transform transform hover:translate-x-2"
-              >
-                <AiOutlineHome className="mr-2 mt-[4px]" size={26} />
-                <span className="nav-item-name">HOME</span>{" "}
-              </Link>
-              <Link
-                to="/shop"
-                className="flex items-center transition-transform transform hover:translate-x-2"
-              >
-                <AiOutlineShopping className="mr-2 mt-[4px]" size={26} />
-                <span className="nav-item-name">SHOP</span>{" "}
-              </Link>
-
-              <Link to="/cart" className="flex">
-                <div className="flex items-center ">
-                  <AiOutlineShoppingCart
-                    className="mt-[4px] mr-[1rem]"
-                    size={26}
-                  />
-                  <span className="nav-item-name">Cart</span>{" "}
-                </div>
-              </Link>
-
-              <Link to="/favorite" className="flex relative">
-                <div className="flex justify-center items-center transition-transform transform hover:translate-x-2">
-                  <FaHeart className=" mr-2" size={20} />
-                  <span className="hidden nav-item-name ">Favorites</span>{" "}
-                </div>
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Mobile Navigation */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0">
+        <MobileNavigation />
+      </div>
 
       {/* Desktop navigation */}
       <div

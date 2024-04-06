@@ -4,6 +4,7 @@ import Loader from "../components/Loader"
 import Message from "../components/Message"
 import Header from "../components/Header"
 import Product from "./Products/Product"
+import SmallProduct from "./Products/SmallProduct"
 
 const Home = () => {
   const { keyword } = useParams()
@@ -20,7 +21,7 @@ const Home = () => {
         </Message>
       ) : (
         <>
-          <div className="flex justify-between items-center">
+          <div className="hidden justify-between items-center md:flex">
             <h1 className="ml-[20rem] mt-[10rem] text-[3rem]">
               Special Products
             </h1>
@@ -34,10 +35,22 @@ const Home = () => {
           </div>
 
           <div>
-            <div className="flex justify-center flex-wrap mt-[2rem]">
+            <div className="hidden justify-center flex-wrap mt-[2rem] md:flex">
               {data.products.map((product) => (
                 <div key={product._id}>
                   <Product product={product} />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <div
+              className="flex flex-wrap justify-center mt-[2rem] md:hidden"
+              style={{ zIndex: 1 }}
+            >
+              {data.products.map((product) => (
+                <div key={product._id}>
+                  <SmallProduct product={product} />
                 </div>
               ))}
             </div>

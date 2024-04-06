@@ -13,3 +13,7 @@ option,
 textarea {
   color: #000;
 }
+
+img {
+  z-index: 0;
+}
