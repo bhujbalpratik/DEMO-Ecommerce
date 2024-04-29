@@ -1,10 +1,18 @@
 import { Link } from "react-router-dom"
 import HeartIcon from "./HeartIcon"
+import { useState } from "react"
 
 const SmallProduct = ({ product }) => {
+  const [zIndex, setZindex] = useState("-z-10")
+  const handleClick = () => {
+    setZindex("z-10")
+    setTimeout(() => {
+      setZindex("-z-10")
+    }, 1000)
+  }
   return (
-    <div className="w-[20rem] ml-[2rem] p-3">
-      <div className="relative -z-10">
+    <div className="w-[20rem] ml-[2rem] p-3" onClick={handleClick}>
+      <div className={`relative ${zIndex}`}>
         <img
           src={product.image}
           alt={product.name}

@@ -7,6 +7,7 @@ import userRouter from "./routes/user.routers.js"
 import categoryRouter from "./routes/category.routers.js"
 import productsRouter from "./routes/product.routers.js"
 import uploadRouter from "./routes/upload.router.js"
+import orderRouter from "./routes/order.routers.js"
 import { errorMiddleware } from "./middlewares/error.middleware.js"
 
 config({ path: "./backend/config/.env" })
@@ -23,6 +24,7 @@ app.use(cookieParser())
 app.use("/api/users", userRouter)
 app.use("/api/category", categoryRouter)
 app.use("/api/products", productsRouter)
+app.use("/api/orders", orderRouter)
 app.use("/api/upload", uploadRouter)
 
 const __dirname = path.resolve()
